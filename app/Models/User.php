@@ -16,6 +16,7 @@ class User extends Authenticatable
         'surname',
         'email',
         'password',
+        'role', 
     ];
 
     protected $hidden = [
@@ -26,13 +27,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'role' => 'string', 
     ];
 
     // Relaciones
 
     public function weddings()
     {
-        return $this->belongsToMany(Wedding::class, 'Wedding_Members', 'user_id', 'wedding_id');
+        return $this->belongsToMany(Wedding::class, 'wedding_members', 'user_id', 'wedding_id');
     }
 
     public function tasksCreated()
