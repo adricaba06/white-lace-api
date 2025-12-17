@@ -18,7 +18,7 @@ class WeddingUserController extends Controller
     public function show(User $user)
     {
         return response()->json($user);
-    }
+    }   
 
     public function update(Request $request, User $user)
     {

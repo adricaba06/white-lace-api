@@ -47,4 +47,15 @@ class WeddingTableController extends Controller
         $weddingTable->delete();
         return response()->json(['message' => 'Wedding table deleted successfully']);
     }
+
+
+    public function getTables($weddingId)
+{
+    return response()->json(
+        WeddingTable::where('wedding_id', $weddingId)->get()
+    );
+}
+
+
+
 }
