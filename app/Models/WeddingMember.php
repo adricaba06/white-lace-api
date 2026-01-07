@@ -43,4 +43,14 @@ class WeddingMember extends Model
     {
         return $this->hasMany(Task::class, 'assigned_to_user_id');
     }
+
+
+    public function tableAssignments()
+    {
+        return $this->hasMany(
+            \App\Models\TableAssignment::class,
+            'wedding_member_id'
+        );
+    }
+
 }

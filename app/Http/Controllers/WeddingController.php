@@ -19,11 +19,11 @@ class WeddingController extends Controller
             'venue_name' => 'required|string|max:255',
             'venue_address' => 'nullable|string',
             'budget' => 'nullable|numeric',
-            'dress_code' => 'nullable|string|max:100',
+            'dress_code' => 'boolean',
             'dress_code_details' => 'nullable|string',
             'are_kids_allowed' => 'boolean',
         ]);
-
+                
         $wedding = Wedding::create($validated);
         return response()->json($wedding, 201);
     }

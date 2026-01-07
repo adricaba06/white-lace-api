@@ -25,7 +25,7 @@ public function store(Request $request)
         'surname' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'role' => ['required', 'string'], // si quieres enviar role desde Postman
+        'role' => ['required', 'string'], 
     ]);
 
     $user = User::create([

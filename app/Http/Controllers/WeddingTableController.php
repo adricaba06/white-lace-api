@@ -15,9 +15,8 @@ class WeddingTableController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'wedding_id' => 'required|exists:weddings,id',
-            'table_number' => 'required|integer|min:1',
-            'table_name' => 'nullable|string|max:100',
+            'wedding_id' => 'required|integer|exists:weddings,id',
+            'table_name' => 'required|string|max:255',
             'max_capacity' => 'required|integer|min:1',
         ]);
 
@@ -33,9 +32,9 @@ class WeddingTableController extends Controller
     public function update(Request $request, WeddingTable $weddingTable)
     {
         $validated = $request->validate([
-            'table_number' => 'sometimes|integer|min:1',
-            'table_name' => 'nullable|string|max:100',
-            'max_capacity' => 'sometimes|integer|min:1',
+            'wedding_id' => 'required|integer|exists:weddings,id',
+            'table_name' => 'required|string|max:255',
+            'max_capacity' => 'required|integer|min:1',
         ]);
 
         $weddingTable->update($validated);
@@ -48,14 +47,28 @@ class WeddingTableController extends Controller
         return response()->json(['message' => 'Wedding table deleted successfully']);
     }
 
+   public function getTables($weddingId)
+    {
+        try {
+            $tables = WeddingTable::where('wedding_id', $weddingId)->get();
+            
+            return response()->json([
+                'success' => true,
+                'data' => $tables 
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error obteniendo mesas: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener las mesas',
+                'data' => []
+            ], 500);
+        }
+    }
 
-    public function getTables($weddingId)
-{
-    return response()->json(
-        WeddingTable::where('wedding_id', $weddingId)->get()
-    );
-}
+    
+    //yo hice relaciones entonces para facilitar cosas en agngular y no traerme una cantidad inmensa de datos hice este metodo el cual me trae a aquellos usuarios que no tienen asignada una mesa
 
 
-
+    
 }

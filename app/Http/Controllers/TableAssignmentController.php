@@ -12,6 +12,13 @@ class TableAssignmentController extends Controller
         return response()->json(TableAssignment::all());
     }
 
+    public function getTableMembers($tableId)
+    {
+        return response()->json(
+            TableAssignment::where('wedding_table_id', $tableId)->get()
+        );
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

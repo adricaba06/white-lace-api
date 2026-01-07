@@ -13,7 +13,6 @@ class WeddingTable extends Model
 
     protected $fillable = [
         'wedding_id',
-        'table_number',
         'table_name',
         'max_capacity',
     ];

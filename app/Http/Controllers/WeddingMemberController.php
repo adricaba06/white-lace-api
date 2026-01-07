@@ -7,6 +7,18 @@ use Illuminate\Http\Request;
 
 class WeddingMemberController extends Controller
 {
+
+
+    public function unassignedByWedding($weddingId)
+    {
+        $members = WeddingMember::where('wedding_id', $weddingId)
+            ->whereDoesntHave('tableAssignments')
+            ->get();
+
+        return response()->json($members, 200);
+    }
+
+    
     // Listar todos los miembros
     public function index()
     {
@@ -34,6 +46,18 @@ class WeddingMemberController extends Controller
     {
         return response()->json($weddingMember);
     }
+
+    public function getById($id)
+    {
+        $member = WeddingMember::find($id);
+
+        if (!$member) {
+            return response()->json(['message' => 'Miembro no encontrado'], 404);
+        }
+
+        return response()->json($member, 200);
+    }
+
 
     // Actualizar un miembro existente
     public function update(Request $request, WeddingMember $weddingMember)
@@ -70,5 +94,22 @@ class WeddingMemberController extends Controller
                 TableAssignment::where('wedding_table_id', $tableId)->get()
             );
         }
+
+
+    public function getByUserId($userId)
+    {
+        $weddingMember = WeddingMember::where('user_id', $userId)
+            ->with('wedding') 
+            ->first();
+
+        if (!$weddingMember) {
+            return response()->json([
+                'message' => 'Wedding member no encontrado'
+            ], 404);
+        }
+
+        return response()->json($weddingMember);
+    }
+
 
 }
