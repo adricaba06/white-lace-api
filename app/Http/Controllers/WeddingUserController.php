@@ -16,20 +16,25 @@ class WeddingUserController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:100',
-            'surname' => 'required|string|max:100',
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'surname' => 'string|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
-            'role' => 'sometimes|in:user,admin', 
+            'role' => 'required|in:user,admin',
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+        $user = new User();
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->role = $request->role;
+        $user->save();
 
-        $user = User::create($validated);
-
-        return response()->json($user, 201);
+        return redirect()->back()->with('success', 'Usuario creado correctamente');
     }
+
 
     public function show(User $user)
     {

@@ -9,7 +9,8 @@ class WeddingController extends Controller
 {
     public function index()
     {
-        return response()->json(Wedding::all());
+        $weddings = Wedding::all();
+        return response()->json($weddings, 200);
     }
 
     public function store(Request $request)

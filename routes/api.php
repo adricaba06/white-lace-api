@@ -14,13 +14,13 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/generate-token', function () {
-    $user = User::where('email', 'admin@example.com')->first();
-    if (!$user) {
-        return response()->json(['message' => 'User not found'], 404);
-    }
-    return $user->createToken('api-token')->plainTextToken;
-});
+// Route::get('/generate-token', function () {
+//     $user = User::where('email', 'admin@example.com')->first();
+//     if (!$user) {
+//         return response()->json(['message' => 'User not found'], 404);
+//     }
+//     return $user->createToken('api-token')->plainTextToken;
+// });
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -37,10 +37,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('tasks', TaskController::class);
     Route::apiResource('wedding-photos', WeddingPhotoController::class);
 
+    //endpoints
     Route::get('/users-list', [WeddingUserController::class, 'index']);
     Route::post('/users', [WeddingUserController::class, 'store']);
     Route::delete('/users/{id}', [WeddingUserController::class, 'destroy']);
     Route::put('/users/{id}', [WeddingUserController::class, 'update']);
+
+    Route::get('/weddings', [WeddingUserController::class, 'index']);
+    Route::post('/weddings', [WeddingUserController::class, 'store']);
+    Route::delete('/weddings/{id}', [WeddingUserController::class, 'destroy']);
+    Route::put('/weddings/{id}', [WeddingUserController::class, 'update']);
+    
 
 
 });
