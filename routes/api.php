@@ -60,6 +60,8 @@ Route::middleware('auth:sanctum')->get('/weddings/{wedding}/tables', [WeddingTab
 
 // Table assign 
 Route::middleware('auth:sanctum')->get('/tables/{table}/members', [TableAssignmentController::class, 'getTableMembers']);
+Route::middleware('auth:sanctum')->get('/tables/members/{weddingMemberId}', [TableAssignmentController::class, 'getTableAssignationByUserId']);
+
 
 // Table Members - CRUD completo 
 Route::middleware('auth:sanctum')->get('/tables/members', [TableAssignmentController::class, 'index']);          

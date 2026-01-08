@@ -19,6 +19,13 @@ class TableAssignmentController extends Controller
         );
     }
 
+    public function getTableAssignationByUserId($weddingMemberId)
+    {
+        return response()->json(
+            TableAssignment::where('wedding_member_id', $weddingMemberId)->get()
+        );
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
