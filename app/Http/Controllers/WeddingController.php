@@ -35,20 +35,23 @@ class WeddingController extends Controller
     }
 
     public function update(Request $request, Wedding $wedding)
-    {
-        $validated = $request->validate([
-            'wedding_date' => 'sometimes|date',
-            'venue_name' => 'sometimes|string|max:255',
-            'venue_address' => 'nullable|string',
-            'budget' => 'nullable|numeric',
-            'dress_code' => 'nullable|string|max:100',
-            'dress_code_details' => 'nullable|string',
-            'are_kids_allowed' => 'boolean',
-        ]);
+{
+    $validated = $request->validate([
+        'wedding_date' => 'sometimes|date',
+        'venue_name' => 'sometimes|string|max:255',
+        'venue_address' => 'sometimes|nullable|string',
+        'budget' => 'sometimes|nullable|numeric',
+        'dress_code' => 'sometimes|nullable|string|max:100',
+        'dress_code_details' => 'sometimes|nullable|string',
+        'are_kids_allowed' => 'sometimes|boolean',
+    ]);
 
-        $wedding->update($validated);
-        return response()->json($wedding);
-    }
+    $wedding->update($validated);
+    $wedding->refresh(); 
+
+    return response()->json($wedding, 200);
+}
+
 
     public function destroy(Wedding $wedding)
     {

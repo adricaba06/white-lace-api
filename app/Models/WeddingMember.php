@@ -13,15 +13,13 @@ class WeddingMember extends Model
 
 
     protected $fillable = [
-        'wedding_id',
-        'user_id',
-        'role',
-        'invitation_status',
-        'rsvp_status',
-        'number_of_companions',
-        'dietary_restrictions',
-        'phone',
+    'wedding_id',
+    'user_id',
+    'role',
+    'status',
+    'profile_picture_url',
     ];
+
 
  
     public function wedding()

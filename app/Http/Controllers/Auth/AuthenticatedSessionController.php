@@ -24,12 +24,16 @@ class AuthenticatedSessionController extends Controller
             return response(['message' => 'Invalid credentials'], 422);
         }
 
-        $token = $request->user()->createToken('api')->plainTextToken;
+        $user = Auth::user(); // <— Aquí obtienes el usuario correctamente
+
+        $token = $user->createToken('api')->plainTextToken;
+
         return response([
             'token' => $token,
-            'user'  => $request->user(),
+            'user'  => $user,
         ], 200);
     }
+
 
     /**
      * Destroy an authenticated session.

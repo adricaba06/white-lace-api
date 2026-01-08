@@ -18,28 +18,40 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): Response
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'surname' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        'role' => ['required', 'string'], // si quieres enviar role desde Postman
+    ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->string('password')),
-        ]);
+    $user = User::create([
+        'name' => $request->name,
+        'surname' => $request->surname,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role, 
+    ]);
 
-        event(new Registered($user));
+    $token = $user->createToken('api')->plainTextToken;
 
-        Auth::login($user);
+    return response()->json([
+        'token' => $token,
+        'user'  => $user,
+    ], 201);
+}
 
-        $token = $user->createToken('api')->plainTextToken;
-        return response([
-            'token' => $token,
-            'user'  => $user,
-        ], 201);
-    }
+public function getAllUsers()
+{
+    $users = User::all(); 
+    return response()->json([
+        'users' => $users
+    ], 200);
+}
+
+
+
 }

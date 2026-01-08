@@ -14,6 +14,7 @@ class WeddingUserController extends Controller
         return response()->json($users, 200);
     }
 
+<<<<<<< HEAD
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -34,12 +35,14 @@ class WeddingUserController extends Controller
 
         return redirect()->back()->with('success', 'Usuario creado correctamente');
     }
+=======
+>>>>>>> 47ffd76ef28bf6d6541e4322f33fa31502c64e1e
 
 
     public function show(User $user)
     {
         return response()->json($user);
-    }
+    }   
 
     public function update(Request $request, User $user)
     {
