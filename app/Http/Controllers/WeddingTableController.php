@@ -43,6 +43,7 @@ class WeddingTableController extends Controller
 
     public function destroy(WeddingTable $weddingTable)
     {
+        $weddingTable->assignments()->delete();
         $weddingTable->delete();
         return response()->json(['message' => 'Wedding table deleted successfully']);
     }
@@ -67,7 +68,7 @@ class WeddingTableController extends Controller
     }
 
     
-    //yo hice relaciones entonces para facilitar cosas en agngular y no traerme una cantidad inmensa de datos hice este metodo el cual me trae a aquellos usuarios que no tienen asignada una mesa
+    //yo hice relaciones  para facilitar cosas en agngular y no traerme una cantidad inmensa de datos hice este metodo el cual me trae a aquellos usuarios que no tienen asignada una mesa
 
 
     

@@ -18,6 +18,10 @@ class WeddingMember extends Model
     'role',
     'status',
     'profile_picture_url',
+    'gender',
+    'transport',
+    'has_intolerance',
+    'children_count',
     ];
 
 

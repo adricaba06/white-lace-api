@@ -39,6 +39,8 @@ Route::middleware('auth:sanctum')->get('/members/{id}', [WeddingMemberController
 
 Route::get('/weddings/{wedding}/members', [WeddingMemberController::class, 'getMembers']);
 
+Route::middleware('auth:sanctum')->get('weddings/{weddingId}/members-paginated', [WeddingMemberController::class, 'getMembersPaginated']);
+
 Route::middleware('auth:sanctum')->get(
     '/users/{user}/wedding-member',
     [WeddingMemberController::class, 'getByUserId']
@@ -53,12 +55,17 @@ Route::middleware('auth:sanctum')->apiResource('tasks', TaskController::class);
 
 
 // Tables -----------------------
-Route::middleware('auth:sanctum')->apiResource('tables', WeddingTableController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('tables', [WeddingTableController::class, 'index']);
+    Route::get('tables/{weddingTable}', [WeddingTableController::class, 'show']);
+    Route::post('tables', [WeddingTableController::class, 'store']);
+    Route::put('tables/{weddingTable}', [WeddingTableController::class, 'update']);
+    Route::delete('tables/{weddingTable}', [WeddingTableController::class, 'destroy']);
+});
 
 // Table assign 
 Route::middleware('auth:sanctum')->get('/weddings/{wedding}/tables', [WeddingTableController::class, 'getTables']);
 
-// Table assign 
 Route::middleware('auth:sanctum')->get('/tables/{table}/members', [TableAssignmentController::class, 'getTableMembers']);
 Route::middleware('auth:sanctum')->get('/tables/members/{weddingMemberId}', [TableAssignmentController::class, 'getTableAssignationByUserId']);
 
